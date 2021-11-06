@@ -1,5 +1,6 @@
 # Nhentai2Panda
-一個Chrome上的NHentai和EXHentai搜尋擴充，適用於Chromium系瀏覽器(Chrome,Edge,Cent Browser,Opera等等)
+![](docs/image/nhentai2panda.png)<br>
+一個Chrome上的NHentai和EXHentai搜尋擴充<br>適用於Chromium系瀏覽器(Chrome,Edge,Cent Browser,Opera等等)
 ## 安裝方法:
 
 ### 建議使用Cent Browser或Chromuim Edge
