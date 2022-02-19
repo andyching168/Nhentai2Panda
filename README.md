@@ -2,14 +2,11 @@
 ![](docs/image/nhentai2panda.png)<br>
 一個Chrome上的NHentai和EXHentai搜尋擴充<br>適用於Chromium系瀏覽器(Chrome,Edge,Cent Browser,Opera等等)
 ## 安裝方法:
-
+### 由於 [Content Policies](https://developer.chrome.com/docs/webstore/program_policies/#content_policies)，本工具已被[Chrome Web Store](https://chrome.google.com/webstore/category/extensions)下架。請依照以下步驟手動安裝：
 ### 建議使用Cent Browser或Chromuim Edge
-下載完解壓縮後<br>
-到Chrome右上角三點選單選擇更多工具>擴充功能<br>
-進去後開啟"開發人員模式"<br>
-點選左上角"載入未封裝項目"<br>
-選擇剛才解壓的資料夾<br>
-即可正常使用<br>
+Step 1：透過 `git clone https://github.com/andyching168/Nhentai2Panda.git` 獲取原始碼，或是到 Releases 下載 zip 壓縮檔。<br>
+Step 2：至 `chrome://extensions/` 打開開發人員模式。<br>
+Step 3：點選"載入未封裝項目"，選擇 repo 的資料夾。<br>
 
 ## 最新版本:
 1.4.2
