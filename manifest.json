@@ -12,7 +12,7 @@
 		"default_title": "Nhentai2Panda"
 	},
 	"name": "Nhentai2Panda",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"storage":"storage.sync",
   "permissions": [
     "activeTab","storage","contextMenus","notifications"
@@ -24,7 +24,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://nhentai.net/g/*","https://exhentai.org/g/*/*/","https://www.pixiv.net/artworks/*","https://e-hentai.org/g/*/*/"
+        "https://nhentai.net/g/*","https://exhentai.org/g/*/*/*","https://www.pixiv.net/artworks/*","https://e-hentai.org/g/*/*/*"
       ],
       "js": [
         "execute-Manga.js"
