@@ -12,10 +12,10 @@
 		"default_title": "Nhentai2Panda"
 	},
 	"name": "Nhentai2Panda",
-	"version": "1.4.2",
+	"version": "1.4.3",
 	"storage":"storage.sync",
   "permissions": [
-    "activeTab","storage","contextMenus", "http://*/*", "https://*/*"
+    "activeTab","storage","contextMenus","notifications", "http://*/*", "https://*/*"
   ],
   "options_page":"options.html",
   "content_scripts": [

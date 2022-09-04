@@ -2,6 +2,19 @@ chrome.contextMenus.onClicked.addListener(function(info,tab) {
     console.log("id: %s, selection: %s, url: %s",info.menuItemId,info.selectionText,tab.url);  
 	
 });
+var notificationNotNumber = {
+    type: "basic",
+    iconUrl: "icon.png",
+    title: "錯誤",
+    message: "這不是純數字"
+};
+var notificationNotNH = {
+    type: "basic",
+    iconUrl: "icon.png",
+    title: "錯誤-無法複製",
+    message: "需要在NHentai相冊中使用"
+};
+
 
 function genericOnClick(info) {  
     console.log(  
@@ -27,7 +40,7 @@ function NHMagicNumberSearch(info, tab) {
 console.log("true");
 	}
 	else{
-		alert("這不是純數字");
+		chrome.notifications.create("", notificationNotNumber);
 	}
 }
 
@@ -37,7 +50,7 @@ function PixivNumberSearch(info, tab) {
 console.log("true");
 	}
 	else{
-		alert("這不是純數字");
+		chrome.notifications.create("", notificationNotNumber);
 	}
 }
 
@@ -53,7 +66,13 @@ function COPYNUM(url) {
 document.body.appendChild(input);
 input.select();
    document.execCommand("Copy");
-    alert("複製完成:"+input.value)  //此行可加可不加
+   var notificationCopyOK = {
+    type: "basic",
+    iconUrl: "icon.png",
+    title: "複製完成:",
+    message: input.value
+	};
+    chrome.notifications.create("", notificationCopyOK);
   document.body.removeChild(input);
 	}
 	
@@ -61,7 +80,7 @@ input.select();
 	
 	
 else{
-		alert("無法複製，需要在Nhentai相冊中使用");
+		chrome.notifications.create("", notificationNotNH);
 	}
 }
 
@@ -99,7 +118,7 @@ function createMenus() {
         onclick:genericOnClick
     });  
 	var imageSearchSauceNAO = chrome.contextMenus.create({  
-	title: "一鍵找車(Sauce NAO)",
+	title: "尋找來源(Sauce NAO)",
     contexts:["image"],
 	"parentId": parent, 
     onclick: function(info) {
@@ -107,8 +126,16 @@ function createMenus() {
     }
 	});
 	
+	var imageSearchGoogle = chrome.contextMenus.create({  
+	title: "尋找來源(Google以圖搜圖)",
+    contexts:["image"],
+	"parentId": parent, 
+    onclick: function(info) {
+        handleImageURLGoogle(info.srcUrl)
+    }
+	});
 	var CopyNum = chrome.contextMenus.create({  
-	title: "複製車牌號碼",
+	title: "複製6位數字",
     contexts:["all"],
 	"parentId": parent, 
     onclick: function(info) {
@@ -118,20 +145,12 @@ function createMenus() {
 	
 	
 	
-	
-	var imageSearchGoogle = chrome.contextMenus.create({  
-	title: "一鍵找車(Google以圖搜圖)",
-    contexts:["image"],
-	"parentId": parent, 
-    onclick: function(info) {
-        handleImageURLGoogle(info.srcUrl)
-    }
-	});
+
 	
 	
 	
 	var NHMagicNumber = chrome.contextMenus.create({  
-        "title": "N站神之語言"+" ["+"%s"+"]",  
+        "title": "NHentai6位數"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
         "parentId": parent,  
@@ -156,7 +175,7 @@ function createMenus() {
 	
 	
 	var randomNH = chrome.contextMenus.create({  
-        "title": "N站隨機發車",  
+        "title": "N站隨機推薦",  
         "type": "normal",  
         "contexts": ['all'],  
         "parentId": parent,  
@@ -166,7 +185,7 @@ function createMenus() {
     });  
 
 	var searchEX = chrome.contextMenus.create({  
-        "title": "熊貓搜尋"+" ["+"%s"+"]",  
+        "title": "EXHentai(裏)搜尋"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
         "parentId": parent,  
@@ -174,7 +193,7 @@ function createMenus() {
     });
 	
 	var searchEH = chrome.contextMenus.create({  
-        "title": "EH表站搜尋"+" ["+"%s"+"]",  
+        "title": "E-Hentai(表)搜尋"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
         "parentId": parent,  
@@ -183,7 +202,7 @@ function createMenus() {
 	
 	
 	var searchNH = chrome.contextMenus.create({  
-        "title": "N站搜尋"+" ["+"%s"+"]",  
+        "title": "NHentai搜尋"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
         "parentId": parent,  

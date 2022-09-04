@@ -3,7 +3,8 @@ var NUM
 var Url
 src="JQuery.js"
 var t=document.getElementById("TitleBar")
-
+var manifestData = chrome.runtime.getManifest();
+VersionText.innerText='版本號:'+manifestData.version;
 
 
 
