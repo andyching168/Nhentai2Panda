@@ -24,10 +24,10 @@ function restore_options() {
 
 
 
-chrome.extension.onRequest.addListener(
-function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(
+function(message, sender, sendResponse) {
 	
-        if(request.method == "getTitle"){
+        if(message.method == "getTitle"){
 			
 			
 			if ( document.URL.search("nhentai.net/g/") != -1 ) {
@@ -75,19 +75,32 @@ function(request, sender, sendResponse) {
 			}
 			
 		}
-            if(request.method == "getUrl"){
+            if(message.method == "getUrl"){
 				Url = document.baseURI;
 				sendResponse({data:Url, method:"getUrl"});
 				
 			}
-			
+			if(message.method == "CopyText"){
+				copyToTheClipboard(message.textToCopy);
+				sendResponse({data:"OK", method:"CopyText"});
+			}
 			
 			
 			
         }
 );
 
-
+async function copyToTheClipboard(textToCopy){
+    const el = document.createElement('textarea');
+    el.value = textToCopy;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+}
 
 
 

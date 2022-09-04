@@ -1,7 +1,4 @@
-chrome.contextMenus.onClicked.addListener(function(info,tab) {  
-    console.log("id: %s, selection: %s, url: %s",info.menuItemId,info.selectionText,tab.url);  
-	
-});
+
 var notificationNotNumber = {
     type: "basic",
     iconUrl: "icon.png",
@@ -15,28 +12,20 @@ var notificationNotNH = {
     message: "需要在NHentai相冊中使用"
 };
 
+chrome.runtime.onInstalled.addListener(() => {
+  createMenus();  
+});
 
-function genericOnClick(info) {  
-    console.log(  
-        "ID是：" + info.menuItemId + "\n" +  
-        "現在的網址是：" + info.pageUrl + "\n" +  
-        "選取的文字是：" + (info.selectionText ? info.selectionText : "") + "\n" +  
-        "現在hover元素的圖片來源：" + (info.srcUrl ? info.srcUrl : "") + "\n" +  
-        "現在hover的連結：" + (info.linkUrl ? info.linkUrl : "") + "\n" +  
-        "現在hover的frame是：" + (info.frameUrl ? info.frameUrl : "") + "\n"  
-    );  
-	
-} 
-function genericOnNHSearch(info, tab) {  
-chrome.tabs.create({ "url":'https://nhentai.net/search/?q='+ (info.selectionText ? info.selectionText : "") }); 
+function genericOnNHSearch(selectionText) {  
+chrome.tabs.create({ "url":'https://nhentai.net/search/?q='+ (selectionText ? selectionText : "") }); 
 	
 	
 	
 }  
 
-function NHMagicNumberSearch(info, tab) {  
-	if(/^[0-9]*$/.test((info.selectionText ? info.selectionText : ""))){
-	chrome.tabs.create({ "url":'https://nhentai.net/g/'+ (info.selectionText ? info.selectionText : "")}); 	
+function NHMagicNumberSearch(selectionText) {  
+	if(/^[0-9]*$/.test((selectionText ? selectionText : ""))){
+	chrome.tabs.create({ "url":'https://nhentai.net/g/'+ (selectionText ? selectionText : "")}); 	
 console.log("true");
 	}
 	else{
@@ -44,9 +33,9 @@ console.log("true");
 	}
 }
 
-function PixivNumberSearch(info, tab) {  
-	if(/^[0-9]*$/.test((info.selectionText ? info.selectionText : ""))){
-	chrome.tabs.create({ "url":'https://www.pixiv.net/artworks/'+ (info.selectionText ? info.selectionText : "")}); 	
+function PixivNumberSearch(selectionText) {  
+	if(/^[0-9]*$/.test((selectionText ? selectionText : ""))){
+	chrome.tabs.create({ "url":'https://www.pixiv.net/artworks/'+ (selectionText ? selectionText : "")}); 	
 console.log("true");
 	}
 	else{
@@ -56,24 +45,21 @@ console.log("true");
 
 
 
-function COPYNUM(url) {  
+function COPYNUM(url) { 
 	if(url.search("nhentai.net/g/") != -1){
-	const input = document.createElement("input");
-	input.style.position = "fixed";
-    input.style.opacity = 0;
-	input.value = url.substring(22,28);
-  //选择当前对象
-document.body.appendChild(input);
-input.select();
-   document.execCommand("Copy");
-   var notificationCopyOK = {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id,{method: "CopyText",textToCopy: url.substring(22,28) }, function(response) {
+			//var T=response.data;
+			console.log(response);
+		})
+})
+var notificationCopyOK = {
     type: "basic",
     iconUrl: "icon.png",
-    title: "複製完成:",
-    message: input.value
-	};
-    chrome.notifications.create("", notificationCopyOK);
-  document.body.removeChild(input);
+    title: "複製成功",
+    message: url.substring(22,28)
+}
+  chrome.notifications.create("", notificationCopyOK);
 	}
 	
 	
@@ -97,15 +83,17 @@ function handleImageURLGoogle(url) {
 }
 
 
-function genericOnPixivSearch(info, tab) {  
-	chrome.tabs.create({ "url":'https://www.pixiv.net/tags/'+ (info.selectionText ? info.selectionText : "") + '/artworks?s_mode=s_tc'});
+function genericOnPixivSearch(selectionText) {  
+	chrome.tabs.create({ "url":'https://www.pixiv.net/tags/'+ (selectionText ? selectionText : "") + '/artworks?s_mode=s_tc'});
 }  
 
-function genericOnEXSearch(info, tab) {  
-	chrome.tabs.create({ "url":'https://exhentai.org/?f_search='+ (info.selectionText ? info.selectionText : "") });
+function genericOnEXSearch(selectionText) {  
+	console.log("genericOnEXSearch");
+	
+	chrome.tabs.create({ "url":'https://exhentai.org/?f_search='+ (selectionText ? selectionText : "") });
 }  
-function genericOnEHSearch(info, tab) {  
-	chrome.tabs.create({ "url":'https://e-hentai.org/?f_search='+ (info.selectionText ? info.selectionText : "") });
+function genericOnEHSearch(selectionText) {  
+	chrome.tabs.create({ "url":'https://e-hentai.org/?f_search='+ (selectionText ? selectionText : "") });
 }  
 
 
@@ -113,34 +101,28 @@ function genericOnEHSearch(info, tab) {
 function createMenus() {  
 	
 	var parent = chrome.contextMenus.create({  
-        title: "NHentai2Panda快速選項",  
-        contexts: ['all'],      
-        onclick:genericOnClick
+        title: "NHentai2Panda快速選項", 
+		id:"RightClickMenu",
+        contexts: ['all']
     });  
 	var imageSearchSauceNAO = chrome.contextMenus.create({  
 	title: "尋找來源(Sauce NAO)",
     contexts:["image"],
-	"parentId": parent, 
-    onclick: function(info) {
-        handleImageURLSauceNAO(info.srcUrl)
-    }
+	id:"imageSearchSauceNAO",
+	"parentId": parent
 	});
 	
 	var imageSearchGoogle = chrome.contextMenus.create({  
 	title: "尋找來源(Google以圖搜圖)",
     contexts:["image"],
-	"parentId": parent, 
-    onclick: function(info) {
-        handleImageURLGoogle(info.srcUrl)
-    }
+	"id":"imageSearchGoogle",
+	"parentId": parent
 	});
 	var CopyNum = chrome.contextMenus.create({  
 	title: "複製6位數字",
+	"id":"CopyNum",
     contexts:["all"],
-	"parentId": parent, 
-    onclick: function(info) {
-        COPYNUM(info.pageUrl)
-    }
+	"parentId": parent
 	});
 	
 	
@@ -153,24 +135,24 @@ function createMenus() {
         "title": "NHentai6位數"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
-        "parentId": parent,  
-        "onclick":NHMagicNumberSearch
+		"id":"NHMagicNumber",
+        "parentId": parent
     });
 	
-	var NHMagicNumber = chrome.contextMenus.create({  
+	var PixivMagicNumber = chrome.contextMenus.create({  
         "title": "Pixiv ID"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
-        "parentId": parent,  
-        "onclick":PixivNumberSearch
+		"id":"PixivMagicNumber",
+        "parentId": parent
     });
 	
-	var searchEX = chrome.contextMenus.create({  
+	var searchPixiv = chrome.contextMenus.create({  
         "title": "Pixiv搜尋"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
-        "parentId": parent,  
-        "onclick":genericOnPixivSearch
+		"id":"searchPixiv",
+        "parentId": parent
     });
 	
 	
@@ -178,26 +160,24 @@ function createMenus() {
         "title": "N站隨機推薦",  
         "type": "normal",  
         "contexts": ['all'],  
-        "parentId": parent,  
-        "onclick": function(){
-			chrome.tabs.create({ "url":'https://nhentai.net/random/'}); 
-			}
+		"id":"randomNH",
+        "parentId": parent
     });  
 
 	var searchEX = chrome.contextMenus.create({  
         "title": "EXHentai(裏)搜尋"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
-        "parentId": parent,  
-        "onclick":genericOnEXSearch
+		"id":"searchEX",
+        "parentId": parent
     });
 	
 	var searchEH = chrome.contextMenus.create({  
         "title": "E-Hentai(表)搜尋"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
-        "parentId": parent,  
-        "onclick":genericOnEHSearch
+		"id":"searchEH",
+        "parentId": parent
     });
 	
 	
@@ -205,21 +185,15 @@ function createMenus() {
         "title": "NHentai搜尋"+" ["+"%s"+"]",  
         "type": "normal",  
         "contexts": ['selection'],  
-        "parentId": parent,  
-        "onclick":genericOnNHSearch
+		"id":"searchNH",
+        "parentId": parent
     });
     var settingpage = chrome.contextMenus.create({  
         "title": "Nhentai2Panda設定",  
         "type": "normal",  
-        "contexts": ['all'],  
-        "parentId": parent,  
-        "onclick": function(){
-	if (chrome.runtime.openOptionsPage) { // New way to open options pages, if supported (Chrome 42+).
-        chrome.runtime.openOptionsPage();
-    } else { // Reasonable fallback.
-        window.open(chrome.runtime.getURL('options.html'));
-    }
-}
+        "contexts": ['all'],
+		"id":"settingpage",
+        "parentId": parent
     });  
     // 使用chrome.contextMenus.create的方法回傳值是項目的id  
     console.log(parent);
@@ -232,4 +206,46 @@ function createMenus() {
 }  
 
 
-createMenus();  
+chrome.contextMenus.onClicked.addListener(function(info,tab) {  
+    console.log("id: %s, selection: %s, url: %s",info.menuItemId,info.selectionText,tab.url);  
+	switch (info.menuItemId) {
+		case "imageSearchSauceNAO":
+			handleImageURLSauceNAO(info.srcUrl);
+		break;
+		case "imageSearchGoogle":
+			handleImageURLGoogle(info.srcUrl);
+		break;
+		case "CopyNum":
+			COPYNUM(info.pageUrl);
+		break;
+		case "NHMagicNumber":
+			NHMagicNumberSearch(info.selectionText);
+		break;
+		case "PixivMagicNumber":
+			PixivNumberSearch(info.selectionText);
+		break;
+		case "searchPixiv":
+			genericOnPixivSearch(info.selectionText);
+		break;
+		case "randomNH":
+			chrome.tabs.create({ "url":'https://nhentai.net/random/'}); 
+		break;
+		case "searchEX":
+			genericOnEXSearch(info.selectionText);
+		break;
+		case "searchEH":
+			genericOnEHSearch(info.selectionText);
+		break;
+		case "searchNH":
+			genericOnNHSearch(info.selectionText);
+		break;
+		case "settingpage":
+			chrome.runtime.openOptionsPage();
+		break;
+		default:
+        //當 expression 的值都不符合上述條件
+        //要執行的陳述句
+		break;
+}
+	
+});

@@ -8,12 +8,13 @@ VersionText.innerText='版本號:'+manifestData.version;
 
 
 
-chrome.tabs.getSelected(null, function(tab) {
-    
+
+chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+	
+
 	
 	
-	
-	chrome.tabs.sendRequest(tab.id, {method: "getTitle"}, function(response) {
+	chrome.tabs.sendMessage(tabs[0].id, {method: "getTitle"}, function(response) {
         if(response.method=="getTitle"){
             Title = response.data;
 			console.log(Title);
@@ -24,7 +25,7 @@ chrome.tabs.getSelected(null, function(tab) {
     });
 	
 	
-	chrome.tabs.sendRequest(tab.id, {method: "getUrl"}, function(response) {
+	chrome.tabs.sendMessage(tabs[0].id, {method: "getUrl"}, function(response) {
         if(response.method=="getUrl"){
             Url = response.data;
 			console.log(Url);
@@ -40,27 +41,28 @@ chrome.tabs.getSelected(null, function(tab) {
 	
 });
 copyTitle.onclick = function(){
+	
 	var obj = document.getElementById("TitleBar");
   //选择当前对象
-  document.getElementById("copyTitle").value="複製成功";
+  document.getElementById("copyTitle").value="複製\n成功";
   obj.select(); 
   try{
     //进行复制到剪切板
     if(document.execCommand("Copy","false",null)){
       //如果复制成功
-      document.getElementById("copyTitle").value="複製成功";
+      document.getElementById("copyTitle").value="複製\n成功";
 
 	  
 	  setTimeout(function() {
-            copyTitle.value="複製標題";
+            copyTitle.value="複製\n標題";
         },1250);
     }else{
       //如果复制失败
-      alert("複製失敗");
+      alert("複製\n失敗");
     }
   }catch(err){
     //如果报错
-    alert("複製錯誤")
+    alert("複製\n錯誤")
   }
 }
 

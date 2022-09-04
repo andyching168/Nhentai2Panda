@@ -1,21 +1,24 @@
 {
 "update_url": "https://clients2.google.com/service/update2/crx",
 
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"icons": {
 		"128": "icon.png"
 	},
 	"description": "可以對NHentai和EXHentai快速搜尋、複製、上車的小工具",
-	"browser_action": {
+	"action": {
 		"default_icon": "icon.png",
 		"default_popup": "popup.html",
 		"default_title": "Nhentai2Panda"
 	},
 	"name": "Nhentai2Panda",
-	"version": "1.4.3",
+	"version": "1.5.0",
 	"storage":"storage.sync",
   "permissions": [
-    "activeTab","storage","contextMenus","notifications", "http://*/*", "https://*/*"
+    "activeTab","storage","contextMenus","notifications"
+  ],
+  "host_permissions": [
+    "http://*/*", "https://*/*"
   ],
   "options_page":"options.html",
   "content_scripts": [
@@ -24,11 +27,11 @@
         "https://nhentai.net/g/*","https://exhentai.org/g/*/*/","https://www.pixiv.net/artworks/*","https://e-hentai.org/g/*/*/"
       ],
       "js": [
-        "execute-Manga.js","event.js"
+        "execute-Manga.js"
       ]
 }
 ],
 "background": {  
-        "scripts": ["event.js"]
+        "service_worker": "event.js"
     }  
 }

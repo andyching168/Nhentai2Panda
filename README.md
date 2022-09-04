@@ -9,8 +9,10 @@ Step 2：至 `chrome://extensions/` 打開開發人員模式。<br>
 Step 3：點選"載入未封裝項目"，選擇 repo 的資料夾。<br>
 
 ## 最新版本:
-1.4.3
+1.5.0
 ## 版本資訊:
+- 1.5.0<br>
+遷移擴充到Manifest V3
 - 1.4.3<br>
 若干用詞修改、顯示版本號、通知改用chrome notification
 - 1.4.2<br>
