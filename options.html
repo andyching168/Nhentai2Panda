@@ -4,37 +4,48 @@
 <head>
 <meta charset="UTF-8">
     <title>NHentai2Panda設定</title>
-    <style>
-    body: {
-        padding: 80px;
-    }
-    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.1.0/tocas.min.css">
 </head>
 
-<body style="font-family:Heiti TC,Microsoft JhengHei;font-size:2em;">
-    NHentai預設選取標題:
+<body>
+    <div class="ts-segment is-center-aligned is-vertically-padded is-elevated">
+    <span class="ts-text is-large">NHentai預設選取標題:</span>
+    <div class="ts-space"></div>
 	<div>
-    <select id="NHTitleLang" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;">
+    <div class="ts-select is-underlined">
+    <select id="NHTitleLang" >
         <option value="NH_ENG">英文標題</option>
         <option value="NH_JPN">日文標題</option>
     </select>
+    </div>
 	</div>
-	
+	<div class="ts-space"></div>
 	
 	
 	<div>
-    EXHentai預設選取標題:
+        <span class="ts-text is-large">EXHentai預設選取標題:</span>
+        <div class="ts-space"></div>
 	<div>
-    <select id="EXTitleLang" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;">
-        <option value="EX_ENG">英文標題</option>
-        <option value="EX_JPN">日文標題</option>
-    </select>
+        <div class="ts-select is-underlined">
+            <select id="EXTitleLang" >
+                <option value="EX_ENG">英文標題</option>
+                <option value="EX_JPN">日文標題</option>
+        </select>
+    </div>
 	</div>
 	</div>
+    <div class="ts-space"></div>
+    
 
-    <div id="status"></div>
-    <button id="save" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;">保存</button>
-	<div style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;">設定需要重新整理分頁方可見效</div>
+    <button  class="ts-button" id="save" >保存</button>
+    <div class="ts-space"></div>
+    <div id="status" style="display:none" class="ts-notice">
+        <div class="title">儲存成功</div>
+        <div class="content">設定需要重新整理分頁方可見效</div>
+    </div>
+    <div class="ts-space"></div>
     <script src="options.js"></script>
+    </div>
 </body>
 </html>

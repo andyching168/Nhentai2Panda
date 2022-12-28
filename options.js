@@ -7,11 +7,10 @@ function save_options() {
 		EXTitleLang: EX_TitleLang,
     }, function() {
         //提供儲存成功的提示
-        var status = document.getElementById('status');
-        status.textContent = '儲存成功';
+        document.getElementById('status').style.display="";
         setTimeout(function() {
-            status.textContent = '';
-        }, 750);
+            document.getElementById('status').style.display="none";//隱藏
+        }, 2000);
     });
 }
 
@@ -28,3 +27,4 @@ function restore_options() {
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
+document.getElementById('status').style.display="none";//隱藏

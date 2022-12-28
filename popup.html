@@ -4,24 +4,31 @@
     <title>NHentai2Panda </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.1.0/tocas.min.css">
   </head>
 
-  <body id="body" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1.25em;">
-  <form>
-標題/關鍵字/6位數：<input id="TitleBar" type="text" style="width:780px;height:50px;font-size:25px"  name="欄位名稱">
-</form>
-	<button id="NHenNum" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;">NHentai<br>6位數</button>
-    <input type="button" id="copyTitle" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;" value="複製
-標題" >
-	<button id="RandomNH" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;" >NHentai<br>隨機出本</button>
-	<button id="PIXIVsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;">Pixiv<br>搜尋</button>
-	<div>
-	<button id="EHsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;">E-Hentai<br>(表)搜尋</button>
-    <button id="EXsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;">EXHentai<br>(裏)搜尋</button>
-	<button id="NHsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;">NHentai<br>搜尋</button>
-	<button id="Setting" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;">偏好<br>設定</button>
-	<span id="VersionText" style=style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;text-align:right;">版本號:X.X.X</span>
+  <body id="body" class="ts-container" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1.25em;">
+  	<div class="ts-space"></div>
+  <div class="ts-input">
+    <input id="TitleBar" type="text" placeholder="標題/關鍵字/6位數：">
 	</div>
+	<div class="ts-space"></div>
+<div class="ts-grid">
+	<button class="ts-button column is-3-wide" id="NHenNum" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;">NHentai<br>6位數</button>
+    <input class="ts-button column is-3-wide" type="button" id="copyTitle" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;" value="複製
+標題" >
+	<button class="ts-button column is-3-wide" id="RandomNH" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;" >NHentai<br>隨機出本</button>
+	<button class="ts-button column is-3-wide" id="PIXIVsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;">Pixiv<br>搜尋</button>
+	</div>
+	<div class="ts-space"></div>
+	<div class="ts-grid">
+	<button class="ts-button is-large column is-3-wide" id="EHsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;">E-Hentai<br>(表)搜尋</button>
+    <button class="ts-button is-large column is-3-wide" id="EXsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;">EXHentai<br>(裏)搜尋</button>
+	<button class="ts-button is-large column is-3-wide" id="NHsearch" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;">NHentai<br>搜尋</button>
+	<button class="ts-button is-large column is-3-wide" id="Setting" style="font-family:Heiti TC,Microsoft JhengHei;font-size:1em;width:135px;height:80px;">偏好<br>設定</button>
+	<span class="column is-3-wide ts-text" id="VersionText" >版本號:X.X.X</span>
+	</div>
+	<div class="ts-space"></div>
     <script src="./popup.js","JQuery.js"></script>
   </body>
 </html>

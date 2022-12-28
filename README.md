@@ -9,8 +9,10 @@ Step 2：至 `chrome://extensions/` 打開開發人員模式。<br>
 Step 3：點選"載入未封裝項目"，選擇 repo 的資料夾。<br>
 
 ## 最新版本:
-1.5.1
+1.5.2
 ## 版本資訊:
+- 1.5.2<br>
+適配[[Tocas UI]](https://github.com/teacat/tocas)，感謝[[teacat]](https://github.com/teacat)
 - 1.5.1<br>
 修改EH和EX的URL適用範圍、刪除無用文件
 - 1.5.0<br>
