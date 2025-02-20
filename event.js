@@ -79,7 +79,7 @@ function handleImageURLSauceNAO(url) {
 
 function handleImageURLGoogle(url) {
     // now do something with the URL string in the background page
-	chrome.tabs.create({ "url":'http://www.google.com/searchbyimage?image_url='+ encodeURIComponent(url) });
+	chrome.tabs.create({ "url":'https://lens.google.com/uploadbyurl?url='+ encodeURIComponent(url) });
 }
 
 
